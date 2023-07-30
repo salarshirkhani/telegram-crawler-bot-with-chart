@@ -17,10 +17,10 @@ async def main():
 
         async for message in app.get_chat_history(TARGET,10):
           msg = await app.get_messages(TARGET, message.id)
-          print(app.get_messages(TARGET, message.id))
+          print(await app.get_messages(TARGET, message.id))
           # Convert the messages to a pandas DataFrame
-          data.append([message.id, msg.caption, message.date,message.views])
-          df = pd.DataFrame(data, columns=["Message ID", "Text", "Date","view"])
+          data.append([msg.sender_chat.title,msg.sender_chat.username,message.id, msg.caption, message.date,message.views,msg.forwards])
+          df = pd.DataFrame(data, columns=["channel_name","channel_id","Message ID", "Text", "Date","view" ,"forward" ])
           # Save the DataFrame to an Excel file
           df.to_excel("output.xlsx", index=False)
 
